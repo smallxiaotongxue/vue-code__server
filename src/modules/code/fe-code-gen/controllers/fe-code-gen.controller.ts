@@ -1,30 +1,33 @@
 /* fe-code-gen.controller.ts */
 
-import { Controller, Get, Post } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Body,
+  // Delete,
+  // Param,
+  // ParseIntPipe,
+  Post,
+  // Patch,
+  // UseGuards,
+  // Query,
+  // HttpStatus,
+  // HttpCode,
+} from '@nestjs/common';
+
+import { FeCodeGenService } from '../services/fe-code-gen.service';
 
 @Controller('feCodeGen')
 export class FeCodeGenController {
-  @Get()
-  findAll(): string {
-    return 'This action returns all cats';
+  constructor(private readonly feCodeGenService: FeCodeGenService) {}
+
+  @Get('getFilesZip')
+  getFilesZip(): string {
+    return 'genFilesZip is OK';
   }
 
-  @Get('genFilesZip')
-  async genFilesZip(): Promise<string> {
-    return await 'This action returns genFilesZip';
+  @Post('genFilesZip')
+  async genFilesZip(@Body() codeDto: any): Promise<void> {
+    return await this.feCodeGenService.createCodeFile(codeDto);
   }
-
-  // @ApiOperation({
-  //   summary: '创建账号',
-  //   description: '创建账号',
-  // })
-  // @ApiOkResponse({
-  //   type: String,
-  //   description: '创建账号返回值',
-  // })
-  // @HttpCode(HttpStatus.CREATED)
-  // @Post()
-  // async createAccount(@Body() createAccountDto: CreateAccountDto): Promise<string> {
-  //   return await this.accountService.createAccount(createAccountDto);
-  // }
 }
